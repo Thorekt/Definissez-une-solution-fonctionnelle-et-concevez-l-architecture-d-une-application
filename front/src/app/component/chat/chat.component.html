@@ -10,6 +10,7 @@
     </div>
 
     <div *ngIf="isConnected">
+        <h3>Connected to: {{roomName}}</h3>
         <div class="messages">
             <div *ngFor="let message of messages">
                 <strong>{{message.sender}}:</strong> {{message.content}}
