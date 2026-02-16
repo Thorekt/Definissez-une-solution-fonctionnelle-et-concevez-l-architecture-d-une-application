@@ -8,7 +8,7 @@ import com.poc.api.service.ChatService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/chat")
+@RequestMapping("/api/room")
 public class ChatHistoryController {
 
     private final ChatService chatService;
@@ -17,7 +17,7 @@ public class ChatHistoryController {
         this.chatService = chatService;
     }
 
-    @GetMapping("/rooms/{room}/messages")
+    @GetMapping("/{room}")
     public List<MessageDTO> history(
             @PathVariable String room) {
 
