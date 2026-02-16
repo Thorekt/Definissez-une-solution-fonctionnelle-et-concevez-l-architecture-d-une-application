@@ -1,0 +1,22 @@
+<div>
+    <h2>Chat Room</h2>
+    <div *ngIf="!isConnected">
+        <p>You are not connected to any chat room.</p>
+        <form (ngSubmit)="joinRoom()">
+            <input type="text" placeholder="Enter room name" name="room" [(ngModel)]="roomName" required>        
+            <input type="text" placeholder="Enter your name" name="sender" [(ngModel)]="senderName" required>
+            <button type="submit">Join Room</button>
+        </form>
+    </div>
+
+    <div *ngIf="isConnected">
+        <div class="messages">
+            <div *ngFor="let message of messages">
+                <strong>{{message.sender}}:</strong> {{message.content}}
+            </div>
+        </div>
+        <form (ngSubmit)="sendMessage()">
+            <input type="text" placeholder="Type your message" name="content" [(ngModel)]="messageContent" required>
+            <button type="submit">Send</button>
+        </form>
+</div>
