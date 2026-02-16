@@ -7,6 +7,6 @@ package com.poc.api.dto;
  * @param sender  the name of the sender of the message
  * @param content the content of the chat message
  */
-public record ChatMessage(String room, String sender, String content) {
+public record MessageDTO(String room, String sender, String content) {
 
 }

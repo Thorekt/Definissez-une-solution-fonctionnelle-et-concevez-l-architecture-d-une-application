@@ -4,15 +4,18 @@ import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 
-import com.poc.api.dto.ChatMessage;
+import com.poc.api.dto.MessageDTO;
+import com.poc.api.service.ChatService;
 
 import lombok.RequiredArgsConstructor;
 
 @Controller
 @RequiredArgsConstructor
-public class ChatWsController {
+public class ChatWebSocketController {
 
     private final SimpMessagingTemplate messagingTemplate;
+
+    private final ChatService chatService;
 
     /**
      * Handles incoming chat messages sent to the "/app/chat.send" destination.
@@ -24,10 +27,12 @@ public class ChatWsController {
      * @return
      */
     @MessageMapping("/chat.send")
-    public void sendMessage(ChatMessage message) {
+    public void sendMessage(MessageDTO message) {
         // Log the received message for debugging purposes
         System.out.println("Received message: " + message);
 
         messagingTemplate.convertAndSend("/topic/room." + message.room(), message);
+        // Save the message to the database using the ChatService
+        chatService.saveMessage(message);
     }
 }
