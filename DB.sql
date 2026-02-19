@@ -83,9 +83,8 @@ CREATE TABLE vehicle (
 
 CREATE TABLE offer (
   id         BIGINT NOT NULL AUTO_INCREMENT,
-  agency_id  BIGINT NOT NULL,
-  city_start VARCHAR(120) NOT NULL,
-  city_end   VARCHAR(120) NOT NULL,
+  agency_start_id  BIGINT NOT NULL,
+  agency_end_id    BIGINT NOT NULL,
   date_start DATETIME     NOT NULL,
   date_end   DATETIME     NOT NULL,
   price      DECIMAL(10,2) NOT NULL,
@@ -93,11 +92,15 @@ CREATE TABLE offer (
   status     VARCHAR(50)  NOT NULL,
   created_at DATETIME     NOT NULL,
   PRIMARY KEY (id),
-  KEY idx_offer_agency_id (agency_id),
   KEY idx_offer_dates (date_start, date_end),
-  KEY idx_offer_city (city_start, city_end),
-  CONSTRAINT fk_offer_agency
-    FOREIGN KEY (agency_id) REFERENCES agency(id)
+  KEY idx_offer_agency_start_id (agency_start_id),
+  KEY idx_offer_agency_end_id (agency_end_id),
+  CONSTRAINT fk_offer_agency_start
+    FOREIGN KEY (agency_start_id) REFERENCES agency(id)
+    ON DELETE RESTRICT
+    ON UPDATE RESTRICT,
+  CONSTRAINT fk_offer_agency_end
+    FOREIGN KEY (agency_end_id) REFERENCES agency(id)
     ON DELETE RESTRICT
     ON UPDATE RESTRICT
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
